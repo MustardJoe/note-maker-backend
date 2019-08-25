@@ -17,4 +17,18 @@ describe('app routes', () => {
   afterAll(() => {
     return mongoose.connection.close();
   });
+
+  it('creates a note with POST', () => {
+    return request(app)
+      .post('/api/v1/notes')
+      .send({ title: 'My Title', body: 'This is a great note' })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          title: 'My Title',
+          body: 'This is a great note',
+          __v: 0
+        });
+      });
+  });
 });
